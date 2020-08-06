@@ -1,6 +1,6 @@
-name: action-slack
+name: asconsoft-action-slack
 description: You can notify slack of GitHub Actions.
-author: 8398a7
+author: asconsoft
 inputs:
   status:
     description: Specify success or failure or cancelled or custom.
@@ -32,9 +32,21 @@ inputs:
     required: false
   author_name:
     description: User name for slack notification.
-    default: 8398a7@action-slack
+    default: asconsoft@asconsoft-action-slack
     required: false
   text:
+    description: You can overwrite text.
+    default: ""
+    required: false
+  text_success:
+    description: You can overwrite text.
+    default: ""
+    required: false
+  text_failure:
+    description: You can overwrite text.
+    default: ""
+    required: false
+  text_cancelled:
     description: You can overwrite text.
     default: ""
     required: false

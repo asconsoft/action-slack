@@ -1,5 +1,7 @@
 # action-slack
 
+Forked action form [action-slack](https://github.com/8398a7/action-slack) to give convenient texts like `text_success`, `text_failure`, `text_cancelled` without using custom_payload.
+
 ![](https://github.com/8398a7/action-slack/workflows/build-test/badge.svg)
 ![](https://github.com/8398a7/action-slack/workflows/Slack%20Mainline/badge.svg)
 ![](https://img.shields.io/github/license/8398a7/action-slack?color=brightgreen)
@@ -15,10 +17,14 @@ You can learn more about it [here](https://action-slack.netlify.app/usecase/01-g
 
 ```yaml
 steps:
-  - uses: 8398a7/action-slack@v3
+  - uses: asconsoft/action-slack@v3
     with:
       status: ${{ job.status }}
       fields: repo,message,commit,author,action,eventName,ref,workflow,job,took # selectable (default: repo,message)
+      text: 'Default text'
+      text_success: 'Success text'
+      text_failure: 'Failure text'
+      text_cancelled: 'Cancelled text'
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # optional
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
@@ -33,7 +39,7 @@ You can learn more about it [here](https://action-slack.netlify.app/usecase/02-c
 
 ```yaml
 steps:
-  - uses: 8398a7/action-slack@v3
+  - uses: asconsoft/action-slack@v3
   with:
     status: custom
     fields: workflow,job,commit,repo,ref,author,took

@@ -7,7 +7,10 @@ async function run(): Promise<void> {
     const mention = core.getInput('mention');
     const author_name = core.getInput('author_name');
     const if_mention = core.getInput('if_mention').toLowerCase();
-    const text = core.getInput('text');
+    const text_default = core.getInput('text');
+    const text_success = core.getInput('text_success');
+    const text_failure = core.getInput('text_failure');
+    const text_cancelled = core.getInput('text_cancelled');
     const username = core.getInput('username');
     const icon_emoji = core.getInput('icon_emoji');
     const icon_url = core.getInput('icon_url');
@@ -20,7 +23,7 @@ async function run(): Promise<void> {
     core.debug(`mention: ${mention}`);
     core.debug(`author_name: ${author_name}`);
     core.debug(`if_mention: ${if_mention}`);
-    core.debug(`text: ${text}`);
+    core.debug(`text: ${text_default}`);
     core.debug(`username: ${username}`);
     core.debug(`icon_emoji: ${icon_emoji}`);
     core.debug(`icon_url: ${icon_url}`);
@@ -45,11 +48,17 @@ async function run(): Promise<void> {
       process.env.SLACK_WEBHOOK_URL,
     );
 
+    const getText = (text: string) => (text ? text : text_default);
+
     switch (status) {
       case Success:
+        await client.send(await client.prepare(getText(text_success)));
+        break;
       case Failure:
+        await client.send(await client.prepare(getText(text_failure)));
+        break;
       case Cancelled:
-        await client.send(await client.prepare(text));
+        await client.send(await client.prepare(getText(text_cancelled)));
         break;
       case Custom:
         await client.send(await client.custom(custom_payload));
